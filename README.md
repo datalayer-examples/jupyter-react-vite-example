@@ -1,14 +1,22 @@
-# Vite + React
+[![Datalayer](https://assets.datalayer.design/datalayer-25.svg)](https://datalayer.io)
 
-This is a [Vite](https://vitejs.dev) project together with React.
+# 🪐 ⚛️ Jupyter React Vite Example
 
-[![Edit in CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/github/codesandbox/codesandbox-template-vite-react/main)
+Example to showcase [Jupyter React](https://github.com/datalayer/jupyter-react) usage in a [Vite.js](https://vitejs.dev/).
 
-[Configuration](https://codesandbox.io/docs/projects/learn/setting-up/tasks) has been added to optimize it for [CodeSandbox Projects](https://codesandbox.io/p/dashboard).
+***This is failing for now due to hard dependency of JupyterLab to Webpack***
 
-## Resources
+```
+libembed.js:5 Uncaught ReferenceError: __webpack_public_path__ is not defined
+    at libembed.js:5:47
+```
 
-- [CodeSandbox — Docs](https://codesandbox.io/docs/projects)
-- [CodeSandbox — Discord](https://discord.gg/Ggarp3pX5H)
-- [Vite — GitHub](https://github.com/vitejs/vite)
-- [Vite — Docs](https://vitejs.dev/guide/)
+<div align="center" style="text-align: center">
+  <img alt="Jupyter React Gallery" src="https://datalayer-jupyter-examples.s3.amazonaws.com/jupyter-react-gallery.gif" />
+</div>
+
+## ⚖️ License
+
+Copyright (c) 2022 Datalayer, Inc.
+
+Released under the terms of the MIT license (see [LICENSE](./LICENSE)).
