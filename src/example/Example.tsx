@@ -1,4 +1,4 @@
-import { selectCell, Cell } from "@datalayer/jupyter-react";
+import { selectCell, Cell, Jupyter } from "@datalayer/jupyter-react";
 
 const SOURCE_EXAMPLE = `"""
 import ipywidgets as widgets
@@ -40,10 +40,10 @@ const CellPreview = () => {
 };
 
 const Example = () => (
-  <>
+  <Jupyter>
     <CellPreview />
     <Cell source={SOURCE_EXAMPLE} />
-  </>
+  </Jupyter>
 );
 
 export default Example;

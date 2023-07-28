@@ -7,14 +7,15 @@
     <title>Vite + React + TS</title>
     <script id="datalayer-config-data" type="application/json">
       {
-        "jupyterServerHttpUrl": "https://datalayer-studio.datalayer.run/api/jupyter",
-        "jupyterServerWsUrl": "ws://datalayer-io.datalayer.run/api/jupyter",
+        "jupyterServerHttpUrl": "https://oss.datalayer.tech/api/jupyter",
+        "jupyterServerWsUrl": "ws://oss.datalayer.tech/api/jupyter",
         "jupyterToken": "60c1661cc408f978c309d04157af55c9588ff9557c9380e4fb50785750703da6"
       }
     </script>
   </head>
   <body>
     <div id="root"></div>
+    <script type="module" src="/src/nodespecific.ts"></script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
