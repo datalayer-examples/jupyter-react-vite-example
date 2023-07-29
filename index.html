@@ -12,10 +12,13 @@
         "jupyterToken": "60c1661cc408f978c309d04157af55c9588ff9557c9380e4fb50785750703da6"
       }
     </script>
+    <!-- Needed for ipywidgets -->
+    <script type="module">
+      globalThis.__webpack_public_path__ = "";
+    </script>
   </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="/src/nodespecific.ts"></script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
