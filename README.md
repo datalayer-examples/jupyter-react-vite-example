@@ -4,10 +4,13 @@
 
 Example to showcase [Jupyter React](https://github.com/datalayer/jupyter-react) usage in a [Vite.js](https://vitejs.dev/).
 
+> 🚧 Only devmode is working for now. The build version of this repository will fail to start due to ipywidgets loading issues.
+
 Ensure to add the following script in your HTML.
 
 ```js
     <!-- Needed for ipywidgets -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script type="module">
       globalThis.__webpack_public_path__ = "";
     </script>
