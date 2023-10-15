@@ -22,7 +22,7 @@ Ensure to add the following script in your HTML if you want to support .
     </script>
 ```
 
-> 🚧 Only `dev-mode` is working for now - `yarn build` will succeed but an exception will be thrown runtime.
+> 🚧 Only `dev-mode` is working for now - `yarn build` will succeed but an exception will be thrown at runtime.
 
 ```bash
 yarn build

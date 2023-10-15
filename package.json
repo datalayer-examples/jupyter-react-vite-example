@@ -10,7 +10,7 @@
     "start": "vite"
   },
   "dependencies": {
-    "@datalayer/jupyter-react": "0.7.11",
+    "@datalayer/jupyter-react": "0.7.13",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },
@@ -19,6 +19,7 @@
     "@types/react-dom": "18.2.5",
     "@vitejs/plugin-react": "4.0.3",
     "typescript": "5.0.3",
-    "vite": "4.4.7"
+    "vite": "4.4.7",
+    "vite-plugin-treat-umd-as-commonjs": "0.1.3"
   }
 }

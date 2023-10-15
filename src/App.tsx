@@ -1,16 +1,15 @@
 import { useState } from "react";
 import reactLogo from "./assets/react.svg";
-import Example from "./example/Example";
+import CellExample from "./examples/CellExample";
 
 // import "./App.css";
 
 function App() {
   const [count, setCount] = useState(0);
-
   return (
     <div className="App">
       <>
-        <Example />
+        <CellExample />
       </>
       <div>
         <a href="https://reactjs.org" target="_blank">
@@ -29,7 +28,6 @@ function App() {
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR.
         </p>
-
         <p>
           Tip: you can use the inspector button next to address bar to click on
           components in the preview and open the code in the editor!

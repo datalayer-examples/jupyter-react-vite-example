@@ -39,11 +39,11 @@ const CellPreview = () => {
   );
 };
 
-const Example = () => (
+const CellExample = () => (
   <Jupyter>
     <CellPreview />
     <Cell source={SOURCE_EXAMPLE} />
   </Jupyter>
 );
 
-export default Example;
+export default CellExample;
