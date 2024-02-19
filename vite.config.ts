@@ -19,4 +19,12 @@ export default defineConfig({
       },
     ],
   },
+  // https://github.com/datalayer/jupyter-ui/issues/198#issuecomment-1949521268
+  optimizeDeps: {
+    esbuildOptions: {
+      loader: {
+        ".whl": "text",
+      },
+    },
+  },
 });
