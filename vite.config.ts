@@ -1,25 +1,61 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { treatAsCommonjs } from "vite-plugin-treat-umd-as-commonjs";
-// import vitePluginRequire from "vite-plugin-require";
 
-// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     react(),
     treatAsCommonjs(),
-//     vitePluginRequire.default(),
+    {
+      name: 'raw-css-as-string',
+      enforce: 'pre',
+      async resolveId(source, importer) {
+        if (source.endsWith('.raw.css') && !source.includes('?raw')) {
+          // rewrite import to append ?raw query
+          const resolved = await this.resolve(source + '?raw', importer, { skipSelf: true });
+          if (resolved) return resolved.id;
+          return null;
+        }
+        return null;
+      }
+    },
+    {
+      name: "fix-text-query",
+      enforce: "pre",
+      async resolveId(source, importer) {
+        if (source.includes("?text")) {
+          let fixed = source.replace("?text", "?raw");
+          const resolved = await this.resolve(fixed, importer, { skipSelf: true });
+          if (resolved) {
+            return resolved.id;
+          }
+          return fixed;
+        }
+        return null;
+      },
+    },
   ],
+  assetsInclude: ["**/*.whl", "**/*.raw.css"],
   resolve: {
     alias: [
       {
-        // this is required for the SCSS modules
         find: /^~(.*)$/,
         replacement: "$1",
       },
     ],
   },
-  // https://github.com/datalayer/jupyter-ui/issues/198#issuecomment-1949521268
+  build: {
+    rollupOptions: {
+      output: {
+        assetFileNames: (assetInfo) => {
+          if (/pypi\//.test(assetInfo.name)) {
+            return "pypi/[name][extname]";
+          }
+          return "assets/[name][extname]";
+        },
+      },
+    },
+  },
   optimizeDeps: {
     esbuildOptions: {
       loader: {

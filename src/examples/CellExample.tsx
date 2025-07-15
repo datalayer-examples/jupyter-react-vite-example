@@ -1,49 +1,53 @@
-import { selectCell, Cell, Jupyter } from "@datalayer/jupyter-react";
+/*
+ * Copyright (c) 2021-2023 Datalayer, Inc.
+ *
+ * MIT License
+ */
 
-const SOURCE_EXAMPLE = `"""
-import ipywidgets as widgets
-widgets.IntSlider(
-    value=7,
-    min=0,
-    max=10,
-    step=1,
-)
-"""
-from IPython.display import display
-for i in range(3):
-    display('😃 String {} added to the DOM in separated DIV.'.format(i))
-import numpy as np
-import matplotlib.pyplot as plt
-x1 = np.linspace(0.0, 5.0)
-x2 = np.linspace(0.0, 2.0)
-y1 = np.cos(2 * np.pi * x1) * np.exp(-x1)
-y2 = np.cos(2 * np.pi * x2)
-fig, (ax1, ax2) = plt.subplots(2, 1)
-fig.suptitle('A tale of 2 subplots')
-ax1.plot(x1, y1, 'o-')
-ax1.set_ylabel('Damped oscillation')
-ax2.plot(x2, y2, '.-')
-ax2.set_xlabel('time (s)')
-ax2.set_ylabel('Undamped')
-plt.show()`;
+import { Box, Button, Label } from '@primer/react';
+import { CodeCell } from '@jupyterlab/cells';
+import { JupyterReactTheme, useJupyter, Cell, KernelIndicator, useKernelsStore, useCellsStore } from '@datalayer/jupyter-react';
 
-const CellPreview = () => {
-  const cell = selectCell();
+const CELL_ID = 'cell-example-1';
+
+const DEFAULT_SOURCE = `from IPython.display import display
+
+for i in range(10):
+    display('I am a long string which is repeatedly added to the dom in separated divs: %d' % i)`;
+
+const CellExample = () => {
+  const { defaultKernel } = useJupyter();
+  const cellsStore = useCellsStore();
+  const kernelsStore = useKernelsStore();
   return (
-    <>
-      <div>source: {cell.source}</div>
-      <br />
-      <div>kernel available: {String(cell.kernelAvailable)}</div>
-      <br />
-    </>
-  );
-};
-
-const CellExample = () => (
-  <Jupyter>
-    <CellPreview />
-    <Cell source={SOURCE_EXAMPLE} />
-  </Jupyter>
-);
+    <JupyterReactTheme>
+      <Box as="h1">A Jupyter Cell</Box>
+      <Box>
+        Source: {cellsStore.getSource(CELL_ID)}
+      </Box>
+      <Box>
+        Outputs Count: {cellsStore.getOutputsCount(CELL_ID)}
+      </Box>
+      <Box>
+        Kernel State: <Label>{defaultKernel && kernelsStore.getExecutionState(defaultKernel.id)}</Label>
+      </Box>
+      <Box>
+        Kernel Phase: <Label>{defaultKernel && kernelsStore.getExecutionPhase(defaultKernel.id)}</Label>
+      </Box>
+      <Box display="flex">
+        <Box>
+          Kernel Indicator:
+        </Box>
+        <Box ml={3}>
+          <KernelIndicator kernel={defaultKernel && defaultKernel.connection}/>
+        </Box>
+      </Box>
+      <Box>
+        <Button onClick={() => cellsStore.execute(CELL_ID)}>Run cell</Button>
+      </Box>
+      <Cell source={DEFAULT_SOURCE} id={CELL_ID}/>
+    </JupyterReactTheme>
+  )
+}
 
 export default CellExample;
