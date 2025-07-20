@@ -6,21 +6,26 @@
 
 import { useState } from "react";
 import reactLogo from "./assets/react.svg";
-import CellExample from "./examples/CellExample";
-
-// Fix for controls version failing to load in Vite.
-// import * as controls from "@jupyter-widgets/controls/lib/index";
-// const c = { ...controls }
-// c.version = "0.1.0";
+import { useJupyter, JupyterReactTheme } from '@datalayer/jupyter-react';
+import { CellExample } from "./examples/CellExample";
+import { NotebookExample } from "./examples/NotebookExample";
 
 import "./App.css";
 
 function App() {
+  const { defaultKernel, serviceManager } = useJupyter({
+    jupyterServerUrl: "https://oss.datalayer.run/api/jupyter-server",
+    jupyterServerToken: "60c1661cc408f978c309d04157af55c9588ff9557c9380e4fb50785750703da6",
+    startDefaultKernel: true,
+  });
   const [count, setCount] = useState(0);
   return (
     <div className="App">
       <>
-        <CellExample />
+        <JupyterReactTheme>
+          { defaultKernel && <CellExample kernel={defaultKernel}/> }
+          { defaultKernel && serviceManager && <NotebookExample kernel={defaultKernel} serviceManager={serviceManager}/> }
+        </JupyterReactTheme>
       </>
       <div>
         <a href="https://reactjs.org" target="_blank">
