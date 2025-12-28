@@ -5,35 +5,62 @@
  */
 
 import { useMemo } from 'react';
-import { Box } from '@primer/react';
-import { Notebook2, Kernel, NotebookToolbar, CellSidebarExtension, CellSidebarButton } from '@datalayer/jupyter-react';
-import { ServiceManager } from '@jupyterlab/services';
+import { INotebookContent } from '@jupyterlab/nbformat';
+import { Box } from '@datalayer/primer-addons';
+import {
+  useJupyter,
+  CellSidebarExtension,
+  CellSidebarButton,
+  JupyterReactTheme,
+  KernelIndicator,
+  Notebook2,
+} from '@datalayer/jupyter-react';
+import { CellToolbarExtension } from './extensions';
 
-const NOTEBOOK_ID = 'notebook-example-1';
+import NBFORMAT from './notebooks/NotebookExample1.ipynb.json';
 
-type INotebookExampleProps = {
-  kernel: Kernel;
-  serviceManager: ServiceManager.IManager;
-}
-
-export const NotebookExample = (props: INotebookExampleProps) => {
-  const { kernel, serviceManager } = props;
-  const extensions = useMemo(() => [
-    new CellSidebarExtension({ factory: CellSidebarButton })
-  ], []);
+export const NotebookExample = () => {
+  const { serviceManager, defaultKernel } = useJupyter({
+    startDefaultKernel: true,
+  });
+  const extensions = useMemo(
+    () => [
+      new CellToolbarExtension(),
+      new CellSidebarExtension({ factory: CellSidebarButton }),
+    ],
+    []
+  );
   return (
-    <>
-      <Box as="h1">A Jupyter Notebook</Box>
-      <Notebook2
-        path="ipywidgets.ipynb"
-        id={NOTEBOOK_ID}
-        serviceManager={serviceManager}
-        kernelId={kernel.id}
-        extensions={extensions}
-        Toolbar={NotebookToolbar}
-      />
-    </>
-  )
-}
+    <JupyterReactTheme>
+      <Box as="h1">Notebook Example</Box>
+      {serviceManager && defaultKernel && (
+        <>
+          <Box>
+            <KernelIndicator
+              kernel={defaultKernel?.connection}
+              label="Kernel Indicator"
+            />
+          </Box>
+          <Notebook2
+            nbformat={NBFORMAT as INotebookContent}
+            id="notebook2-nbformat-id"
+            kernel={defaultKernel}
+            serviceManager={serviceManager}
+            height="calc(100vh - 2.6rem)" // (Height - Toolbar Height).
+            extensions={extensions}
+            /*
+            collaborationServer={{
+              baseURL: 'https://prod1.datalayer.run',
+              token: '',
+              documentName: '',
+              type: 'datalayer'
+            }}
+            */
+          />
+        </>
+      )}
+    </JupyterReactTheme>
+  );
+};
 
 export default NotebookExample;

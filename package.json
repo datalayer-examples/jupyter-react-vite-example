@@ -11,9 +11,9 @@
     "postinstall": "patch-package"
   },
   "dependencies": {
-    "@datalayer/icons-react": "^1.0.0",
-    "@datalayer/jupyter-react": "^1.0.5",
-    "@datalayer/primer-addons": "^1.0.3",
+    "@datalayer/icons-react": "^1.0.7",
+    "@datalayer/jupyter-react": "^1.2.0",
+    "@datalayer/primer-addons": "^1.0.4",
     "react": "18.3.1",
     "react-dom": "18.3.1"
   },
