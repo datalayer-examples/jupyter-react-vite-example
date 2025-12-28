@@ -9,11 +9,10 @@ import { Box } from '@datalayer/primer-addons';
 import { PlayIcon } from '@primer/octicons-react';
 import {
   useCellsStore,
-  useJupyter,
   useKernelsStore,
   Cell,
-  JupyterReactTheme,
   KernelIndicator,
+  Kernel,
 } from '@datalayer/jupyter-react';
 
 const CELL_ID = 'cell-example-1';
@@ -23,30 +22,33 @@ const DEFAULT_SOURCE = `from IPython.display import display
 for i in range(10):
     display('I am a long string which is repeatedly added to the dom in separated divs: %d' % i)`;
 
-export const CellExample = () => {
-  const { defaultKernel } = useJupyter({ startDefaultKernel: true });
+interface CellExampleProps {
+  kernel: Kernel;
+}
+
+export const CellExample = ({ kernel }: CellExampleProps) => {
   const cellsStore = useCellsStore();
   const kernelsStore = useKernelsStore();
   return (
-    <JupyterReactTheme>
+    <>
       <Box as="h1">Cell Example</Box>
       <Box as="pre">Source: {cellsStore.getSource(CELL_ID)}</Box>
       <Box>Outputs Count: {cellsStore.getOutputsCount(CELL_ID)}</Box>
       <Box>
         Kernel State:{' '}
         <Label>
-          {defaultKernel && kernelsStore.getExecutionState(defaultKernel.id)}
+          {kernel && kernelsStore.getExecutionState(kernel.id)}
         </Label>
       </Box>
       <Box>
         Kernel Phase:{' '}
         <Label>
-          {defaultKernel && kernelsStore.getExecutionPhase(defaultKernel.id)}
+          {kernel && kernelsStore.getExecutionPhase(kernel.id)}
         </Label>
       </Box>
       <Box>
         <KernelIndicator
-          kernel={defaultKernel?.connection}
+          kernel={kernel?.connection}
           label="Kernel Indicator"
         />
       </Box>
@@ -58,10 +60,10 @@ export const CellExample = () => {
           Run cell
         </Button>
       </Box>
-      {defaultKernel && (
-        <Cell id={CELL_ID} source={DEFAULT_SOURCE} kernel={defaultKernel} />
+      {kernel && (
+        <Cell id={CELL_ID} source={DEFAULT_SOURCE} kernel={kernel} />
       )}
-    </JupyterReactTheme>
+    </>
   );
 };
 

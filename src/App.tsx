@@ -5,10 +5,11 @@
  */
 
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
 import { useJupyter, JupyterReactTheme } from '@datalayer/jupyter-react';
 import { CellExample } from "./examples/CellExample";
 import { NotebookExample } from "./examples/NotebookExample";
+
+import reactLogo from "./assets/react.svg";
 
 import "./App.css";
 

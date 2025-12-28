@@ -6,23 +6,25 @@
 
 import { useMemo } from 'react';
 import { INotebookContent } from '@jupyterlab/nbformat';
+import { ServiceManager } from '@jupyterlab/services';
 import { Box } from '@datalayer/primer-addons';
 import {
-  useJupyter,
   CellSidebarExtension,
   CellSidebarButton,
-  JupyterReactTheme,
   KernelIndicator,
   Notebook2,
+  Kernel,
 } from '@datalayer/jupyter-react';
 import { CellToolbarExtension } from './extensions';
 
 import NBFORMAT from './notebooks/NotebookExample1.ipynb.json';
 
-export const NotebookExample = () => {
-  const { serviceManager, defaultKernel } = useJupyter({
-    startDefaultKernel: true,
-  });
+interface NotebookExampleProps {
+  kernel: Kernel;
+  serviceManager: ServiceManager.IManager;
+}
+
+export const NotebookExample = ({ kernel, serviceManager }: NotebookExampleProps) => {
   const extensions = useMemo(
     () => [
       new CellToolbarExtension(),
@@ -31,20 +33,20 @@ export const NotebookExample = () => {
     []
   );
   return (
-    <JupyterReactTheme>
+    <>
       <Box as="h1">Notebook Example</Box>
-      {serviceManager && defaultKernel && (
+      {serviceManager && kernel && (
         <>
           <Box>
             <KernelIndicator
-              kernel={defaultKernel?.connection}
+              kernel={kernel?.connection}
               label="Kernel Indicator"
             />
           </Box>
           <Notebook2
             nbformat={NBFORMAT as INotebookContent}
             id="notebook2-nbformat-id"
-            kernel={defaultKernel}
+            kernel={kernel}
             serviceManager={serviceManager}
             height="calc(100vh - 2.6rem)" // (Height - Toolbar Height).
             extensions={extensions}
@@ -59,7 +61,7 @@ export const NotebookExample = () => {
           />
         </>
       )}
-    </JupyterReactTheme>
+    </>
   );
 };
 
