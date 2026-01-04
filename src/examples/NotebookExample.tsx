@@ -12,7 +12,7 @@ import {
   CellSidebarExtension,
   CellSidebarButton,
   KernelIndicator,
-  Notebook2,
+  Notebook,
   Kernel,
 } from '@datalayer/jupyter-react';
 import { CellToolbarExtension } from './extensions';
@@ -43,7 +43,7 @@ export const NotebookExample = ({ kernel, serviceManager }: NotebookExampleProps
               label="Kernel Indicator"
             />
           </Box>
-          <Notebook2
+          <Notebook
             nbformat={NBFORMAT as INotebookContent}
             id="notebook2-nbformat-id"
             kernel={kernel}
